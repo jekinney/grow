@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCourseVideoPivot extends Migration
+class CreateSubcourseVideoPivot extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class CreateCourseVideoPivot extends Migration
      */
     public function up()
     {
-        Schema::create('course_video', function (Blueprint $table) {
-            $table->unsignedInteger('course_id');
+        Schema::create('subcourse_video', function (Blueprint $table) {
+            $table->unsignedInteger('subcourse_id');
             $table->unsignedInteger('video_id');
         });
     }
@@ -26,6 +26,6 @@ class CreateCourseVideoPivot extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('course_video');
+        Schema::dropIfExists('subcourse_video');
     }
 }

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Training\Models\Video;
+use App\Training\Models\{
+    Video,
+    Course
+};
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -26,9 +29,9 @@ class VideoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Course $course)
     {
-       return view( 'dashboard.video.create' );
+       return view( 'dashboard.video.create' )->withCourses( $course->basicList() );
     }
 
     /**
@@ -39,7 +42,11 @@ class VideoController extends Controller
      */
     public function store(Request $request, Video $video)
     {
-        return redirect()->route( 'dash.video.show', $video->store( $request ) );
+        dd( $request->all() );
+        
+        $video->store( $request );
+
+        return redirect()->route( 'dash.video.index' );
     }
 
     /**
@@ -59,9 +66,9 @@ class VideoController extends Controller
      * @param  \App\Training\Models\Video $video
      * @return \Illuminate\Http\Response
      */
-    public function edit(Video $video)
+    public function edit(Video $video, Course $course)
     {
-        return view( 'dashboard.video.edit' )->withVideo( $video->edit() );
+        return view( 'dashboard.video.edit' )->withVideo( $video->edit() )->withCourses( $course->root() );
     }
 
     /**

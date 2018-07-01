@@ -76,6 +76,8 @@ trait VideoQueries
 	{
 		$this->update( $this->validateAndSet( $request ) );
 
+		$this->subcourses()->sync( $request->subcourses );
+		
 		return $this->fresh();
 	}
 
@@ -87,7 +89,7 @@ trait VideoQueries
 	*/
 	public function remove()
 	{
-		$this->courses()->detach();
+		$this->subcourses()->detach();
 		
 		return $this->delete();
 	}

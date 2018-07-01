@@ -21,13 +21,13 @@ class Course extends Model
 	*
 	* @var array
 	*/
-    protected $withCount = ['videos'];
+    protected $withCount = ['subcourses'];
 
-    /**
- 	* Get all assigned videos.
- 	*/
-	public function videos()
+	/**
+	* Get all subcourses
+	*/
+	public function subcourses()
 	{
-    	return $this->belongsToMany( Video::class );
+		return $this->hasMany( Subcourse::class )->orderBy( 'display_order', 'asc' );
 	}
 }

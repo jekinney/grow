@@ -46,8 +46,8 @@ class Video extends Model
 	/**
  	* Get all assigned courses.
  	*/
-	public function courses()
+	public function subcourses()
 	{
-    	return $this->belongsToMany( Course::class );
+    	return $this->belongsToMany( Subcourse::class );
 	}
 }

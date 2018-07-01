@@ -24,9 +24,9 @@ class CourseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Course $course)
     {
-        return view( 'dashboard.course.create' );
+        return view( 'dashboard.course.create' )->withCourses( $course->basicList() );
     }
 
     /**
@@ -63,7 +63,7 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        return view( 'dashboard.course.edit' )->withCourse( $course->edit() );
+        return view( 'dashboard.course.edit' )->withCourse( $course->edit() )->withCourses( $course->basicList() );
     }
 
     /**
@@ -88,7 +88,7 @@ class CourseController extends Controller
      * @param  \App\Training\Models\Course $course
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Course $course)
+    public function destroy(Request $request, Course $course)
     {
         $course->remove();
 

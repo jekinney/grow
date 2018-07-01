@@ -4,10 +4,10 @@ namespace App\Training\Queries;
 
 use Illuminate\Http\Request;
 
-trait CourseQueries
+trait SubcourseQueries
 {
 	use CoursesQueries;
-
+	
 	/**
 	* Get a list of resources
 	*
@@ -25,9 +25,11 @@ trait CourseQueries
 	*
 	* @return Collection
 	*/
-	public function basicList()
+	public function basicList($id)
 	{
-		return $this->orderBy( 'display_order', 'asc' )->get('id', 'name', 'slug', 'thumbnail');
+		return $this->where( 'course_id', $id )
+				->orderBy( 'display_order', 'asc' )
+				->get( 'id', 'name', 'slug', 'thumbnail' );
 	}
 
 	/**
@@ -38,7 +40,7 @@ trait CourseQueries
 	*/
 	public function show()
 	{
-		return $this->load( 'subcourses', 'subcourses.videos' );
+		return $this->load( 'course', 'videos' );
 	}
 
 	/**
@@ -84,11 +86,7 @@ trait CourseQueries
 	*/
 	public function remove()
 	{
-		if ( $this->subcategories->count() > 0 ) {
-
-			abort( 422, 'Course has subcourses and can not be deleted.' );
-
-		}
+		$this->videos()->detach();
 
 		$this->removeThumbnail();
 

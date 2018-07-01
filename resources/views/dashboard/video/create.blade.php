@@ -3,47 +3,52 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-10">
+            <div class="col-md-10 mt-4">
 
                 <section class="card">
 
                     <header class="card-header">
-                        Create a new video
+                        <h1 class="card-title">Create a new video</h1>
                     </header>
 
                     <form action="{{ route( 'dash.video.store' ) }}" method="post" class="card-body">
-                       @csrf
+                        @csrf
+                        
+                        <course-select courses="{{ $courses }}"></course-select>
+                        
 
-                       <div class="row">
+                        <slug-name-date slugged="{{ old('slug') }}" 
+                            named="{{ old('name') }}" 
+                            date="{{ old('publish_at') }}" 
+                            errored="{{ $errors }}"
+                        ></slug-name-date>
 
-                            <div class="col">
-                                <label for="slug">Slug</label>
-                                <input type="text" name="slug" id="slug" value="{{ old('slug') }}" class="form-control">
-                                <div class="invalid-feedback">
-                                    Please choose a username.
-                                </div>
-                            </div>
-                            
-                            <div class="col">
-                                <label for="name">Name</label>
-                                <input type="text" name="name" id="name" value="{{ old('name') }}" class="form-control">
-                            </div>
-
-                            <div class="col-3">
-                                <label for="publish_at">Publish Date</label>
-                                <input type="date" name="publish_at" id="publish_at" value="{{ old('publish_at') }}" class="form-control">
-                            </div>
-
-                        </div>
 
                         <div class="form-group">
                             <label for="path">Path</label>
-                            <textarea name="path" id="path" class="form-control">{{ old('path') }}</textarea>
+                            <textarea name="path" 
+                                id="path" 
+                                class="form-control {{ $errors->has( 'path' )? 'is-invalid':'' }}"
+                            >{{ old('path') }}</textarea>
+                            @if( $errors->has( 'path' ) )
+                                <div class="invalid-feedback">
+                                    {{ $errors->first( 'path' ) }}
+                                </div>
+                            @endif
                         </div>
                         
                         <div class="form-group">
                             <label for="description">Description</label>
-                            <textarea name="description" id="description" class="form-control">{{ old('description') }}</textarea>
+                            <textarea 
+                                name="description" 
+                                id="description" 
+                                class="form-control {{ $errors->has( 'description' )? 'is-invalid':'' }}"
+                            >{{ old('description') }}</textarea>
+                            @if( $errors->has( 'description' ) )
+                                <div class="invalid-feedback">
+                                    {{ $errors->first( 'description' ) }}
+                                </div>
+                            @endif
                         </div>
 
                         <div class="row">
